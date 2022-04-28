@@ -39,17 +39,9 @@ while run:
     screen.fill((255,0,0))
     keys = pygame.key.get_pressed()
 
-    # for event in pygame.event.get():
-    #     if event.type == pygame.QUIT:
-    #         run = False 
-    #     if event.type == pygame.MOUSEBUTTONDOWN:
-    #         print("RUNNING")
-    #         bullet = pygame.Rect((playerX + pWidth / 2, pHeight ), (50, 50))
-    #         bullets.append(bullet)
-    #         for i in range(len(bullets)):
-    #             while bullets[i].y > 0:
-    #                 bullets[i].y -= bulletSpeed
-    #         print(bullets)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False 
 
     if keys[pygame.K_DOWN] and playerY + pHeight < sHeight:
         playerY += 1
