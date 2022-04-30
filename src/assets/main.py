@@ -9,7 +9,7 @@ def input(key):
     if key == "1":
         for i in letters:
             held_keys[i] = 0
-        camera.position = (0, 0, -60)
+        camera.position = (0, 0, -70)
         camera.rotation_x = 0
 
     if key == "2":
@@ -105,6 +105,8 @@ def update():
         plutoDeltaT += 0.02 / speedDiv # 0.212
         cameraDeltaT += 0.02
 
+        sun.rotation_y += time.dt * 20
+
         mercury_radius = 2.3
         mercury.x = math.cos(mercuryDeltaT) * mercury_radius
         mercury.z = math.sin(mercuryDeltaT) * mercury_radius
@@ -133,31 +135,31 @@ def update():
         mars.rotation_y += time.dt * 50
 
 
-        jupiter_radius = 12
+        jupiter_radius = 11
         jupiter.x = math.cos(jupiterDeltaT) * jupiter_radius
         jupiter.z = math.sin(jupiterDeltaT) * jupiter_radius 
         jupiter.rotation_y += time.dt * 50
 
 
-        saturn_radius = 15
+        saturn_radius = 17
         saturn.x = math.cos(saturnDeltaT) * saturn_radius
         saturn.z = math.sin(saturnDeltaT) * saturn_radius
         saturn.rotation_y += time.dt * 50
 
 
-        uranus_radius = 18
+        uranus_radius = 22
         uranus.x = math.cos(uranusDeltaT) * uranus_radius
         uranus.z = math.sin(uranusDeltaT) * uranus_radius
         uranus.rotation_y += time.dt * 50
 
 
-        neptune_radius = 20
+        neptune_radius = 25
         neptune.x = math.cos(neptuneDeltaT) * neptune_radius
         neptune.z = math.sin(neptuneDeltaT) * neptune_radius
         neptune.rotation_y += time.dt * 50
 
 
-        pluto_radius = 22.5
+        pluto_radius = 27
         pluto.x = math.cos(plutoDeltaT) * pluto_radius
         pluto.z = math.sin(plutoDeltaT) * pluto_radius
         pluto.rotation_y += time.dt * 50
@@ -199,11 +201,11 @@ def update():
             camera.z = math.sin(plutoDeltaT) * pluto_radius
 
     if held_keys["up arrow"] and not held_keys["shift"]:
-        camera.y -= .5
-
-    if held_keys["down arrow"] and not held_keys["shift"]:
         camera.y += .5
 
+    if held_keys["down arrow"] and not held_keys["shift"]:
+        camera.y -= .5
+    
     if held_keys["left arrow"]:
         camera.x -= .5
 
@@ -221,7 +223,7 @@ def update():
     
 app = Ursina(position = (0, 0))
 
-defaultHeight = 100
+defaultHeight = 143
 speedDiv = 5
 
 
@@ -236,6 +238,25 @@ saturn = Entity(model = "sphere", scale = 2.5, texture = "saturn.jpg")
 neptune = Entity(model = "sphere", scale = 1.2, texture = "neptune.jpg")
 uranus = Entity(model = "sphere", scale = 1.5, texture = "uranus.jfif")
 pluto = Entity(model = "sphere", scale = .5, texture = "pluto.jpg")
+
+
+ring = Entity(model=load_model('torus.obj'))
+ring.position = saturn.position
+ring.scale = saturn.scale
+ring.scale_y = .4
+ring.rotation_x = 3
+ring.reparent_to(saturn)
+ring.color = color.rgb(159, 144, 114)
+
+uRing = Entity(model=load_model('torus.obj'))
+uRing.position = uranus.position
+uRing.scale = uranus.scale - .1
+uRing.scale_y = .3
+uRing.rotation_x = 110
+uRing.reparent_to(uranus)
+uRing.color = color.rgb(28, 156, 195)
+
+
 
 # pluto = Entity(model = "sphere", color = color.pink, scale = .3)
 
@@ -259,12 +280,12 @@ controls = {
     "u": "Follows Uranus",
     "n": "Follows Neuptune",
     "p": "Follows Pluto",
-    "up arrow": "zooms in",
-    "down arrow": "zooms out",
+    "up arrow": "zooms out (up on y-axis)",
+    "down arrow": "zooms in (down on y-axis)",
     "left arrow": "moves to the left",
     "right arrow": "moves to the right",
-    "shift + left": "moves up",
-    "shift + right": "moves down"
+    "shift + left": "moves on the z-axis (on the sun's axis) closer to the sun",
+    "shift + right": "moves on the z-axis (on the sun's axis) away from the sun"
 }
 
 mercuryDeltaT = np.pi
