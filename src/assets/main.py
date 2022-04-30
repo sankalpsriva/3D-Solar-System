@@ -20,6 +20,7 @@ def input(key):
 
     if key == "escape":
         pause = not pause
+        
 # m, v, e, ma, j, 
 # z = Mercury, x = Venus, c = Earth, b = Mars (r), l = Jupiter, k = Saturn, h = Uranus, y = Neptune, q = Pluto 
 
@@ -191,23 +192,27 @@ def update():
             camera.x = math.cos(plutoDeltaT) * pluto_radius
             camera.z = math.sin(plutoDeltaT) * pluto_radius
 
+    if held_keys["up arrow"]:
+        camera.y -= .5
+
+    if held_keys["down arrow"]:
+        camera.y += .5
+
+    if held_keys["left arrow"]:
+        camera.x -= .5
+
+    if held_keys["right arrow"]:
+        camera.x += .5
+
+    if held_keys["shift"]:
         if held_keys["up arrow"]:
-            camera.y -= 1
+            camera.z += .5
 
+    if held_keys["shift"]:
         if held_keys["down arrow"]:
-            camera.y += 1
+            camera.z -= .5
 
-        if held_keys["left arrow"]:
-            camera.x -= 1
-
-        if held_keys["right arrow"]:
-            camera.x += 1
-
-        if held_keys["up arrow"] and held_keys["shift"]:
-            camera.z += 1
-
-        if held_keys["down arrow"] and held_keys["shift"]:
-            camera.z -= 1
+    
 
 app = Ursina()
 
