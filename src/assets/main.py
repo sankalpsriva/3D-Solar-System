@@ -2,8 +2,73 @@ from ursina import *
 import numpy as np
 import math
 
+
+def input(key):
+    letters = ["z","x","c","b","l","k","h","y","q"]
+    if key == "1":
+        for i in letters:
+            held_keys[i] = 0
+        camera.position = (0, 0, -60)
+        camera.rotation_x = 0
+
+    if key == "2":
+        for i in letters:
+            held_keys[i] = 0
+        camera.position = (0, defaultHeight, 0)
+        camera.rotation_x = 90
+
+# m, v, e, ma, j, 
+# z = Mercury, x = Venus, c = Earth, b = Mars (r), l = Jupiter, k = Saturn, h = Uranus, y = Neptune, q = Pluto 
+
+    if key == "m":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["z"] = 1
+
+    if key == "v":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["x"] = 1
+
+    if key == "e":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["c"] = 1
+
+    if key == "r":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["b"] = 1
+
+    if key == "j":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["l"] = 1
+
+    if key == "s":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["k"] = 1
+
+    if key == "u":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["h"] = 1
+
+    if key == "n":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["y"] = 1
+
+    if key == "p":
+        for i in letters:
+            held_keys[i] = 0
+        held_keys["q"] = 1
+
 def update():
-    global increment, mercuryDeltaT, venusDeltaT, earthDeltaT, marsDeltaT, jupiterDeltaT, saturnDeltaT, uranusDeltaT, neptuneDeltaT, plutoDeltaT 
+    global increment, follows, mercuryDeltaT, venusDeltaT, earthDeltaT, marsDeltaT, jupiterDeltaT, saturnDeltaT, uranusDeltaT, neptuneDeltaT, plutoDeltaT, cameraDeltaT, state3
+    global mercury_radius, venus_radius, earth_radius, mars_radius, jupiter_radius, saturn_radius, uranus_radius, neptune_radius, pluto_radius
+
     mercuryDeltaT += 0.212 / speedDiv # 0.02
     venusDeltaT += 0.185 / speedDiv  # 0.03
     earthDeltaT += 0.15 / speedDiv  # 0.034
@@ -13,10 +78,8 @@ def update():
     uranusDeltaT += 0.034 / speedDiv# 0.15
     neptuneDeltaT += 0.03 / speedDiv# 0.185
     plutoDeltaT += 0.02 / speedDiv # 0.212
-
+    cameraDeltaT += 0.02
     
-
-
     mercury_radius = 1.8
     mercury.x = math.cos(mercuryDeltaT) * mercury_radius
     mercury.z = math.sin(mercuryDeltaT) * mercury_radius
@@ -69,21 +132,57 @@ def update():
     pluto.z = math.sin(plutoDeltaT) * pluto_radius
     pluto.rotation_y += time.dt * 50
 
-    # if increment % 500 == 0 and increment % 1000 != 0:
-    #     camera.position = (x, 0, -60)
-    #     camera.rotation = 0
-    # elif increment % 1000 == 0:
-    #     camera.position = (0, defaultHeight, 0)
-    camera.rotation = 90
+    if held_keys["z"]:
+        camera.y = 20
+        camera.x = math.cos(mercuryDeltaT) * mercury_radius
+        camera.z = math.sin(mercuryDeltaT) * mercury_radius
 
+    if held_keys["x"]:
+        camera.y = 20
+        camera.x = math.cos(venusDeltaT) * venus_radius
+        camera.z = math.sin(venusDeltaT) * venus_radius
 
-    increment += 1
-    print(increment)
+    if held_keys["c"]:
+        camera.y = 20
+        camera.x = math.cos(earthDeltaT) * earth_radius
+        camera.z = math.sin(earthDeltaT) * earth_radius
+
+    if held_keys["b"]:
+        camera.y = 20
+        camera.x = math.cos(marsDeltaT) * mars_radius
+        camera.z = math.sin(marsDeltaT) * mars_radius
+    
+    if held_keys["l"]:
+        camera.y = 20
+        camera.x = math.cos(jupiterDeltaT) * jupiter_radius
+        camera.z = math.sin(jupiterDeltaT) * jupiter_radius
+
+    if held_keys["k"]:
+        camera.y = 20
+        camera.x = math.cos(saturnDeltaT) * saturn_radius
+        camera.z = math.sin(saturnDeltaT) * saturn_radius
+    
+    if held_keys["h"]:
+        camera.y = 20
+        camera.x = math.cos(uranusDeltaT) * uranus_radius
+        camera.z = math.sin(uranusDeltaT) * uranus_radius
+    
+    if held_keys["y"]:
+        camera.y = 20
+        camera.x = math.cos(neptuneDeltaT) * neptune_radius
+        camera.z = math.sin(neptuneDeltaT) * neptune_radius
+
+    if held_keys["q"]:
+        camera.y = 20
+        camera.x = math.cos(plutoDeltaT) * pluto_radius
+        camera.z = math.sin(plutoDeltaT) * pluto_radius
 
 app = Ursina()
 
 defaultHeight = 100
 speedDiv = 5
+state3 = False
+
 
 sun = Entity(model = "sphere", scale = 2, texture = "sun.png")
 mercury = Entity(model = "sphere", scale = .8, texture = "mercury.jpg")
@@ -97,12 +196,16 @@ uranus = Entity(model = "sphere", scale = 1.5, texture = "uranus.jfif")
 pluto = Entity(model = "sphere", scale = .5, texture = "pluto.jpg")
 
 # pluto = Entity(model = "sphere", color = color.pink, scale = .3)
-x = 0
+
 camera.position = (0, defaultHeight, 0)
+camera.rotation_x = 90
+cameraState = "default"
+
 increment = 0
 
 
-Sky(texture = "space.png")
+
+Sky(texture = "download.jfif")
 
 mercuryDeltaT = np.pi
 venusDeltaT = np.pi
@@ -113,6 +216,8 @@ saturnDeltaT = np.pi
 uranusDeltaT = np.pi
 neptuneDeltaT = np.pi
 plutoDeltaT = np.pi
+cameraDeltaT = np.pi
+
 
 app.run()
 
