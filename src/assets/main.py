@@ -248,6 +248,23 @@ ring.rotation_x = 3
 ring.reparent_to(saturn)
 ring.color = color.rgb(159, 144, 114)
 
+stars_radius = 500
+for i in range(1000):
+    star = Entity(model = "sphere", scale = .8, color = color.white, texture = "download.png")
+    bStar = Entity(model = "sphere", scale = .4, color = color.white, texture = "download.png")
+
+    star.x = math.cos(i) * stars_radius
+    star.y = random.randint(-100, 100)
+    star.z = math.sin(i) * stars_radius
+
+    bStar.x = random.randint(-100, 100)
+    bStar.y = -50
+    bStar.z = random.randint(-100, 100)
+
+    bStar.color = color.rgb(random.randint(0,255), random.randint(0,255), random.randint(0,255))
+    star.color = color.rgb(random.randint(0,255), random.randint(0,255), random.randint(0,255))
+    
+
 uRing = Entity(model=load_model('torus.obj'))
 uRing.position = uranus.position
 uRing.scale = uranus.scale - .1
@@ -255,7 +272,6 @@ uRing.scale_y = .3
 uRing.rotation_x = 110
 uRing.reparent_to(uranus)
 uRing.color = color.rgb(28, 156, 195)
-
 
 
 # pluto = Entity(model = "sphere", color = color.pink, scale = .3)
