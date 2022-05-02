@@ -13,13 +13,20 @@ def input(key):
         for i in letters:
             held_keys[i] = 0
         camera.position = (0, 0, -70)
-        camera.rotation_x = 0
+        camera.rotation = (0, 0, 0)
+    
+    if key == "2": # Camera posistion two, side view of planets
+        for i in letters:
+            held_keys[i] = 0
+        camera.position = (0, 0, 70)
+        camera.rotation = (0, -180, 0)
 
-    if key == "2": # Camera posistion two, bird's eye view 
+    if key == "3": # Camera posistion three, bird's eye view 
         for i in letters:
             held_keys[i] = 0
         camera.position = (0, defaultHeight, 0)
         camera.rotation_x = 90
+        camera.rotation_z = 0
 
     if key == "escape": # Pauses movement
         pause = not pause
@@ -253,7 +260,7 @@ ring.reparent_to(saturn)
 ring.color = color.rgb(159, 144, 114)
 
 stars_radius = 500
-for i in range(1000):
+for i in range(1250):
     star = Entity(model = "sphere", scale = .8, color = color.white, texture = "sky_sunset")
     bStar = Entity(model = "sphere", scale = .4, color = color.white, texture = "sky_sunset")
 
@@ -290,8 +297,9 @@ Sky(texture = "download.jfif")
 print(Fore.GREEN + "\nPress H For Controls\n" + Fore.WHITE)
 
 controls = {
-    "1": "3D View of Planets",
-    "2": "Bird's Eye View of Solar System",
+    "1": "3D side view of Planets",
+    "2": "Another 3D side view of Planets",
+    "3": "Bird's Eye View of Solar System",
     "p": "Pauses movement",
     "m": "Follows Mercury",
     "v": "Folows Venus",
