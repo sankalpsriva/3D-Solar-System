@@ -1,6 +1,7 @@
 from ursina import *
 import numpy as np
 import math
+from colorama import Fore, Back, Style
 
 
 def input(key):
@@ -24,8 +25,9 @@ def input(key):
         pause = not pause
     
     if key == "h": # Prints controls to the terminal 
+        print(" ")
         for key in controls.keys():
-            print(f"{key}: {controls[key]}")
+            print(f"{Fore.GREEN + key}: {Fore.GREEN + controls[key]} {Fore.WHITE}")
 
     if key == "m": # Follows Mercury
         camera.y = 20
@@ -284,6 +286,8 @@ camera.rotation_x = 90
 pause = False
 
 Sky(texture = "download.jfif")
+
+print(Fore.GREEN + "\nPress H For Controls\n" + Fore.WHITE)
 
 controls = {
     "1": "3D View of Planets",
