@@ -6,91 +6,94 @@ import math
 def input(key):
     global pause, controls
     letters = ["z","x","c","b","l","k","t","y","q"]
-    if key == "1":
+    
+    # Keyboard Presses
+    if key == "1": # Camera posistion one, side view of planets
         for i in letters:
             held_keys[i] = 0
         camera.position = (0, 0, -70)
         camera.rotation_x = 0
 
-    if key == "2":
+    if key == "2": # Camera posistion two, bird's eye view 
         for i in letters:
             held_keys[i] = 0
         camera.position = (0, defaultHeight, 0)
         camera.rotation_x = 90
 
-    if key == "escape":
+    if key == "escape": # Pauses movement
         pause = not pause
     
-    if key == "h":
+    if key == "h": # Prints controls to the terminal 
         for key in controls.keys():
             print(f"{key}: {controls[key]}")
 
-    if key == "m":
+    if key == "m": # Follows Mercury
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["z"] = 1
 
-    if key == "v":
+    if key == "v": # Follows Venus
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["x"] = 1
 
-    if key == "e":
+    if key == "e": # Follows Earth
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["c"] = 1
 
-    if key == "r":
+    if key == "r": # Follows Mars
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["b"] = 1
 
-    if key == "j":
+    if key == "j": # Follows Jupiter
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["l"] = 1
 
-    if key == "s":
+    if key == "s": # Follows Saturn
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["k"] = 1
 
-    if key == "u":
+    if key == "u": # Follows Uranus
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["t"] = 1
 
-    if key == "n":
+    if key == "n": # Follows Neptune
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["y"] = 1
 
-    if key == "p":
+    if key == "p": # Follows Pluto
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys["q"] = 1
 
-def update():
+def update(): 
+    # Global variables that are used, cannot be defined here because it would never increase
     global mercuryDeltaT, venusDeltaT, earthDeltaT, marsDeltaT, jupiterDeltaT, saturnDeltaT, uranusDeltaT, neptuneDeltaT, plutoDeltaT, cameraDeltaT
-    global mercury_radius, venus_radius, earth_radius, mars_radius, jupiter_radius, saturn_radius, uranus_radius, neptune_radius, pluto_radius
+    # global mercury_radius, venus_radius, earth_radius, mars_radius, jupiter_radius, saturn_radius, uranus_radius, neptune_radius, pluto_radius
     global pause
 
     if not pause:
@@ -102,7 +105,7 @@ def update():
         saturnDeltaT += 0.0415 / speedDiv # 0.1
         uranusDeltaT += 0.034 / speedDiv# 0.15
         neptuneDeltaT += 0.03 / speedDiv# 0.185
-        plutoDeltaT += 0.02 / speedDiv # 0.212
+        plutoDeltaT += 0.015 / speedDiv # 0.212
         cameraDeltaT += 0.02
 
         sun.rotation_y += time.dt * 20
@@ -220,7 +223,6 @@ def update():
         if held_keys["down arrow"]:
             camera.z -= .5
 
-    
 app = Ursina(position = (0, 0))
 
 defaultHeight = 143
@@ -250,8 +252,8 @@ ring.color = color.rgb(159, 144, 114)
 
 stars_radius = 500
 for i in range(1000):
-    star = Entity(model = "sphere", scale = .8, color = color.white, texture = "download.png")
-    bStar = Entity(model = "sphere", scale = .4, color = color.white, texture = "download.png")
+    star = Entity(model = "sphere", scale = .8, color = color.white, texture = "sky_sunset")
+    bStar = Entity(model = "sphere", scale = .4, color = color.white, texture = "sky_sunset")
 
     star.x = math.cos(i) * stars_radius
     star.y = random.randint(-100, 100)
