@@ -102,7 +102,6 @@ def input(key):
 def update(): 
     # Global variables that are used, cannot be defined here because it would never increase
     global mercuryDeltaT, venusDeltaT, earthDeltaT, marsDeltaT, jupiterDeltaT, saturnDeltaT, uranusDeltaT, neptuneDeltaT, plutoDeltaT, cameraDeltaT
-    # global mercury_radius, venus_radius, earth_radius, mars_radius, jupiter_radius, saturn_radius, uranus_radius, neptune_radius, pluto_radius
     global pause
 
     if not pause:
@@ -212,16 +211,16 @@ def update():
             camera.x = math.cos(plutoDeltaT) * pluto_radius
             camera.z = math.sin(plutoDeltaT) * pluto_radius
 
-    if held_keys["up arrow"] and not held_keys["shift"]:
+    if held_keys["up arrow"] and not held_keys["shift"] and not held_keys["control"]:
         camera.y += .5
 
-    if held_keys["down arrow"] and not held_keys["shift"]:
+    if held_keys["down arrow"] and not held_keys["shift"] and not held_keys["control"]:
         camera.y -= .5
     
-    if held_keys["left arrow"]:
+    if held_keys["left arrow"] and not held_keys["control"]:
         camera.x -= .5
 
-    if held_keys["right arrow"]:
+    if held_keys["right arrow"] and not held_keys["control"]:
         camera.x += .5
 
     if held_keys["shift"]:
@@ -231,6 +230,22 @@ def update():
     if held_keys["shift"]:
         if held_keys["down arrow"]:
             camera.z -= .5
+
+    if held_keys["control"]:
+        if held_keys["up arrow"]:
+            camera.rotation_x -= 1
+    
+    if held_keys["control"]:
+        if held_keys["down arrow"]:
+            camera.rotation_x += 1
+
+    if held_keys["control"]:
+        if held_keys["left arrow"]:
+            camera.rotation_y -= 1
+    
+    if held_keys["control"]:
+        if held_keys["right arrow"]:
+            camera.rotation_y += 1
 
 app = Ursina(position = (0, 0))
 
