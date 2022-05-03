@@ -276,7 +276,7 @@ ring.reparent_to(saturn)
 ring.color = color.rgb(159, 144, 114)
 
 stars_radius = 500
-for i in range(1250):
+for i in range(1000):
     star = Entity(model = "sphere", scale = .8, color = color.white, texture = "sky_sunset")
     bStar = Entity(model = "sphere", scale = .4, color = color.white, texture = "sky_sunset")
 
