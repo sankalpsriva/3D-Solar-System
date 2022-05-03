@@ -1,7 +1,7 @@
 from ursina import *
 import numpy as np
 import math
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 
 def input(key):
