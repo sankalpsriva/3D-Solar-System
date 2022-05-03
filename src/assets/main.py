@@ -27,7 +27,8 @@ def input(key):
         camera.position = (0, defaultHeight, 0)
         camera.rotation_x = 90
         camera.rotation_z = 0
-
+        camera.rotation_y = 0
+    
     if key == "escape": # Pauses movement
         pause = not pause
     
