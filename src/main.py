@@ -1,8 +1,12 @@
 from ursina import *
+from tkinter import * 
+import json
 import numpy as np
 import math
 from colorama import Fore
 
+global root
+root = Tk()
 
 def input(key):
     global pause, controls
@@ -42,63 +46,63 @@ def input(key):
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["z"] = 1
+        held_keys[letters[0]] = 1
 
     if key == "v": # Follows Venus
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["x"] = 1
+        held_keys[letters[1]] = 1
 
     if key == "e": # Follows Earth
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["c"] = 1
+        held_keys[letters[2]] = 1
 
     if key == "r": # Follows Mars
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["b"] = 1
+        held_keys[letters[3]] = 1
 
     if key == "j": # Follows Jupiter
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["l"] = 1
+        held_keys[letters[4]] = 1
 
     if key == "s": # Follows Saturn
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["k"] = 1
+        held_keys[letters[5]] = 1
 
     if key == "u": # Follows Uranus
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["t"] = 1
+        held_keys[letters[6]] = 1
 
     if key == "n": # Follows Neptune
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["y"] = 1
+        held_keys[letters[7]] = 1
 
     if key == "p": # Follows Pluto
         camera.y = 20
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
-        held_keys["q"] = 1
+        held_keys[letters[8]] = 1
 
 def update(): 
     # Global variables that are used, cannot be defined here because it would never increase
@@ -176,39 +180,39 @@ def update():
         pluto.z = math.sin(plutoDeltaT) * pluto_radius
         pluto.rotation_y += time.dt * 50
 
-        if held_keys["z"]:
+        if held_keys[letters[0]]:
             camera.x = math.cos(mercuryDeltaT) * mercury_radius
             camera.z = math.sin(mercuryDeltaT) * mercury_radius
 
-        if held_keys["x"]:
+        if held_keys[letters[1]]:
             camera.x = math.cos(venusDeltaT) * venus_radius
             camera.z = math.sin(venusDeltaT) * venus_radius
 
-        if held_keys["c"]:
+        if held_keys[letters[2]]:
             camera.x = math.cos(earthDeltaT) * earth_radius
             camera.z = math.sin(earthDeltaT) * earth_radius
 
-        if held_keys["b"]:
+        if held_keys[letters[3]]:
             camera.x = math.cos(marsDeltaT) * mars_radius
             camera.z = math.sin(marsDeltaT) * mars_radius
 
-        if held_keys["l"]:
+        if held_keys[letters[4]]:
             camera.x = math.cos(jupiterDeltaT) * jupiter_radius
             camera.z = math.sin(jupiterDeltaT) * jupiter_radius
 
-        if held_keys["k"]:
+        if held_keys[letters[5]]:
             camera.x = math.cos(saturnDeltaT) * saturn_radius
             camera.z = math.sin(saturnDeltaT) * saturn_radius
 
-        if held_keys["t"]:
+        if held_keys[letters[6]]:
             camera.x = math.cos(uranusDeltaT) * uranus_radius
             camera.z = math.sin(uranusDeltaT) * uranus_radius
 
-        if held_keys["y"]:
+        if held_keys[letters[7]]:
             camera.x = math.cos(neptuneDeltaT) * neptune_radius
             camera.z = math.sin(neptuneDeltaT) * neptune_radius
 
-        if held_keys["q"]:
+        if held_keys[letters[8]]:
             camera.x = math.cos(plutoDeltaT) * pluto_radius
             camera.z = math.sin(plutoDeltaT) * pluto_radius
 
@@ -253,18 +257,137 @@ app = Ursina(position = (0, 0))
 defaultHeight = 143
 speedDiv = 5
 
+global sunInfo, mercuryInfo, venusInfo, earthInfo, marsInfo, jupiterInfo, saturnInfo, neptuneInfo, uranusInfo, plutoInfo
+with open(r'ursina-project\ursina-project\src\planets.json', "r") as current:
+    file = json.load(current)
+    uranusInfo = file["Sun"][0]
+    mercuryInfo = file["Mercury"][0]
+    venusInfo = file["Venus"][0]
+    earthInfo = file["Earth"][0]
+    marsInfo = file["Mars"][0]
+    jupiterInfo = file["Jupiter"][0]
+    saturnInfo = file["Saturn"][0]
+    uranusInfo = file["Uranus"][0]
+    neptuneInfo = file["Neptune"][0]
+    plutoInfo = file["Pluto"][0]
 
-sun = Entity(model = "sphere", scale = 2, texture = "sun.png")
-mercury = Entity(model = "sphere", scale = .8, texture = "mercury.jpg")
-venus = Entity(model = "sphere", scale = .9, texture = "venus.jpg")
-earth = Entity(model = "sphere", scale = 1, texture = "earth.jfif")
+
+# z = "mercury",x = "venus",c = "earth",b = "mars",l = "jupiter",k = "saturn",t = "uranus",y = "neptune",q = "pluto"]
+
+letters = ["z","x","c","b","l","k","t","y","q"]
+
+def sOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    print("".join([f"\n{key}, {uranusInfo[key]}" for key in uranusInfo.keys()]))
+
+def mOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[0]] = 1
+    print("".join([f"\n{key}, {mercuryInfo[key]}" for key in mercuryInfo.keys()]))
+
+def vOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[1]] = 1
+    print("".join([f"\n{key}, {venus[key]}" for key in venusInfo.keys()]))
+
+def eOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[2]] = 1
+    print("".join([f"\n{key}, {earthInfo[key]}" for key in earthInfo.keys()]))
+
+def rOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[3]] = 1
+    print("".join([f"\n{key}, {marsInfo[key]}" for key in marsInfo.keys()]))
+
+def jOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[4]] = 1
+    print("".join([f"\n{key}, {jupiterInfo[key]}" for key in jupiterInfo.keys()]))
+
+
+def stOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[5]] = 1
+    print("".join([f"\n{key}, {saturnInfo[key]}" for key in saturnInfo.keys()]))
+
+def uOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0  
+    
+    held_keys[letters[6]] = 1
+    print("".join([f"\n{key}, {uranusInfo[key]}" for key in uranusInfo.keys()]))
+
+
+def nOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[7]] = 1
+    print("".join([f"\n{key}, {neptuneInfo[key]}" for key in neptuneInfo.keys()]))
+
+def pOnClick():
+    camera.position = (0, 20, 0)
+    camera.rotation_x = 90
+
+    for i in letters:
+        held_keys[i] = 0
+
+    held_keys[letters[8]] = 1
+    print("".join([f"\n{key}, {plutoInfo[key]}" for key in plutoInfo.keys()]))
+
+sun = Entity(model = "sphere", scale = 2, texture = "sun.png", collider = 'box', on_click = sOnClick)
+mercury = Entity(model = "sphere", scale = .8, texture = "mercury.jpg", collider = 'box', on_click = mOnClick)
+venus = Entity(model = "sphere", scale = .9, texture = "venus.jpg", collider = 'box', on_click = vOnClick)
+earth = Entity(model = "sphere", scale = 1, texture = "earth.jfif", collider = 'box', on_click = eOnClick)
 moon = Entity(model = "sphere", scale = .3, texture = "moon.jpg")
-mars = Entity(model = "sphere", scale = .7, texture = "mars.png")
-jupiter = Entity(model = "sphere", scale = 3, texture = "jupiter.jpg")
-saturn = Entity(model = "sphere", scale = 2.5, texture = "saturn.jpg")
-neptune = Entity(model = "sphere", scale = 1.2, texture = "neptune.jpg")
-uranus = Entity(model = "sphere", scale = 1.5, texture = "uranus.jfif")
-pluto = Entity(model = "sphere", scale = .5, texture = "pluto.jpg")
+mars = Entity(model = "sphere", scale = .7, texture = "mars.png", collider = 'box', on_click = rOnClick)
+jupiter = Entity(model = "sphere", scale = 3, texture = "jupiter.jpg", collider = 'box', on_click = jOnClick)
+saturn = Entity(model = "sphere", scale = 2.5, texture = "saturn.jpg", collider = 'box', on_click = stOnClick)
+neptune = Entity(model = "sphere", scale = 1.2, texture = "neptune.jpg", collider = 'box', on_click = nOnClick)
+uranus = Entity(model = "sphere", scale = 1.5, texture = "uranus.jfif", collider = 'box', on_click = uOnClick)
+pluto = Entity(model = "sphere", scale = .5, texture = "pluto.jpg", collider = 'box', on_click = pOnClick)
 
 
 ring = Entity(model=load_model('torus.obj'))
