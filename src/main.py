@@ -1,17 +1,32 @@
 from ursina import *
-from tkinter import * 
 import json
 import numpy as np
 import math
 from colorama import Fore
 
 global root
-root = Tk()
-
+global sunInfo, mercuryInfo, venusInfo, earthInfo, marsInfo, jupiterInfo, saturnInfo, neptuneInfo, uranusInfo, plutoInfo
+with open(r'ursina-project\ursina-project\src\planets.json', "r") as current:
+    file = json.load(current)
+    sunInfo = file["Sun"][0]
+    mercuryInfo = file["Mercury"][0]
+    venusInfo = file["Venus"][0]
+    earthInfo = file["Earth"][0]
+    marsInfo = file["Mars"][0]
+    jupiterInfo = file["Jupiter"][0]
+    saturnInfo = file["Saturn"][0]
+    uranusInfo = file["Uranus"][0]
+    neptuneInfo = file["Neptune"][0]
+    plutoInfo = file["Pluto"][0]
+    controls = file["controls"]
 def input(key):
+    # global variables that keep track of controls dictionary, pause boolean, and default trackingCameraHeight
     global pause, controls, trackingCameraHeight
 
+    # Default tracking heigt
     trackingCameraHeight = 50
+
+    # Had to use unused letters to set certain keys being held to track
     letters = ["z","x","c","b","l","k","t","y","q"]
     
     # Keyboard Presses
@@ -125,63 +140,67 @@ def update():
 
         sun.rotation_y += time.dt * 20
 
+        # Mercury orbit 
         mercury_radius = 2.3
         mercury.x = math.cos(mercuryDeltaT) * mercury_radius
         mercury.z = math.sin(mercuryDeltaT) * mercury_radius
         mercury.rotation_y += time.dt * 50
 
+        # Venus orbit 
         venus_radius = 3.5
         venus.x = math.cos(venusDeltaT) * venus_radius
         venus.z = math.sin(venusDeltaT) * venus_radius
         venus.rotation_y += time.dt * 50
 
-
+        # Earth orbit    
         earth_radius = 5
         earth.x = math.cos(earthDeltaT) * earth_radius
         earth.z = math.sin(earthDeltaT) * earth_radius
         earth.rotation_y += time.dt * 50
 
+        # Moon orbit, had to use earthDeltaT and added earth.x and earth.z to make it orbit around the earth
         moon.y = .5
         moon.x = math.cos(earthDeltaT) * (earth_radius - 4) + earth.x
         moon.z = math.sin(earthDeltaT) * (earth_radius - 4) + earth.z
         moon.rotation_y += time.dt * 50
 
-
+        # Mars orbit
         mars_radius = 8
         mars.x = math.cos(marsDeltaT) * mars_radius
         mars.z = math.sin(marsDeltaT) * mars_radius
         mars.rotation_y += time.dt * 50
 
-
+        # Jupiter orbit
         jupiter_radius = 11
         jupiter.x = math.cos(jupiterDeltaT) * jupiter_radius
         jupiter.z = math.sin(jupiterDeltaT) * jupiter_radius 
         jupiter.rotation_y += time.dt * 50
 
-
+        # Saturn orbit
         saturn_radius = 17
         saturn.x = math.cos(saturnDeltaT) * saturn_radius
         saturn.z = math.sin(saturnDeltaT) * saturn_radius
         saturn.rotation_y += time.dt * 50
 
-
+        # Uranus orbit
         uranus_radius = 22
         uranus.x = math.cos(uranusDeltaT) * uranus_radius
         uranus.z = math.sin(uranusDeltaT) * uranus_radius
         uranus.rotation_y += time.dt * 50
 
-
+        # Neptune orbit
         neptune_radius = 25
         neptune.x = math.cos(neptuneDeltaT) * neptune_radius
         neptune.z = math.sin(neptuneDeltaT) * neptune_radius
         neptune.rotation_y += time.dt * 50
-
-
+        
+        # Pluto orbit
         pluto_radius = 27
         pluto.x = math.cos(plutoDeltaT) * pluto_radius
         pluto.z = math.sin(plutoDeltaT) * pluto_radius
         pluto.rotation_y += time.dt * 50
 
+        # Camera tracking based on letter pressed
         if held_keys[letters[0]]:
             camera.x = math.cos(mercuryDeltaT) * mercury_radius
             camera.z = math.sin(mercuryDeltaT) * mercury_radius
@@ -218,6 +237,7 @@ def update():
             camera.x = math.cos(plutoDeltaT) * pluto_radius
             camera.z = math.sin(plutoDeltaT) * pluto_radius
 
+    # Camera Controls 
     if held_keys["up arrow"] and not held_keys["shift"] and not held_keys["control"]:
         camera.y += .5
 
@@ -259,23 +279,6 @@ app = Ursina(position = (0, 0))
 defaultHeight = 143
 speedDiv = 5
 
-global sunInfo, mercuryInfo, venusInfo, earthInfo, marsInfo, jupiterInfo, saturnInfo, neptuneInfo, uranusInfo, plutoInfo
-with open(r'ursina-project\ursina-project\src\planets.json', "r") as current:
-    file = json.load(current)
-    uranusInfo = file["Sun"][0]
-    mercuryInfo = file["Mercury"][0]
-    venusInfo = file["Venus"][0]
-    earthInfo = file["Earth"][0]
-    marsInfo = file["Mars"][0]
-    jupiterInfo = file["Jupiter"][0]
-    saturnInfo = file["Saturn"][0]
-    uranusInfo = file["Uranus"][0]
-    neptuneInfo = file["Neptune"][0]
-    plutoInfo = file["Pluto"][0]
-
-
-# z = "mercury",x = "venus",c = "earth",b = "mars",l = "jupiter",k = "saturn",t = "uranus",y = "neptune",q = "pluto"]
-
 letters = ["z","x","c","b","l","k","t","y","q"]
 
 def sOnClick():
@@ -285,7 +288,7 @@ def sOnClick():
     for i in letters:
         held_keys[i] = 0
 
-    print("".join([f"\n{key}, {uranusInfo[key]}" for key in uranusInfo.keys()]))
+    print("".join([f"\n{key}, {sunInfo[key]}" for key in sunInfo.keys()]))
 
 def mOnClick():
     camera.position = (0, trackingCameraHeight, 0)
@@ -398,7 +401,7 @@ ring.scale = saturn.scale
 ring.scale_y = .4
 ring.rotation_x = 3
 ring.reparent_to(saturn)
-ring.color = color.rgb(159, 144, 114)
+ring.color = color.rgb(186, 184, 110)
 
 stars_radius = 500
 for i in range(1000):
@@ -436,28 +439,6 @@ pause = False
 Sky(texture = "download.jfif")
 
 print(Fore.GREEN + "\nPress H For Controls\n" + Fore.WHITE)
-
-controls = {
-    "1": "3D side view of Planets",
-    "2": "Another 3D side view of Planets",
-    "3": "Bird's Eye View of Solar System",
-    "p": "Pauses movement",
-    "m": "Follows Mercury",
-    "v": "Folows Venus",
-    "e": "Follows Venus",
-    "r": "Follows Mars",
-    "j": "Follows Jupiter",
-    "s": "Follows Saturn",
-    "u": "Follows Uranus",
-    "n": "Follows Neuptune",
-    "p": "Follows Pluto",
-    "up arrow": "zooms out (up on y-axis)",
-    "down arrow": "zooms in (down on y-axis)",
-    "left arrow": "moves to the left",
-    "right arrow": "moves to the right",
-    "shift + left": "moves on the z-axis (on the sun's axis) closer to the sun",
-    "shift + right": "moves on the z-axis (on the sun's axis) away from the sun"
-}
 
 mercuryDeltaT = np.pi
 venusDeltaT = np.pi
