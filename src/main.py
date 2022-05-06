@@ -9,7 +9,9 @@ global root
 root = Tk()
 
 def input(key):
-    global pause, controls
+    global pause, controls, trackingCameraHeight
+
+    trackingCameraHeight = 50
     letters = ["z","x","c","b","l","k","t","y","q"]
     
     # Keyboard Presses
@@ -42,63 +44,63 @@ def input(key):
             print(f"{Fore.GREEN + key}: {Fore.GREEN + controls[key]} {Fore.WHITE}")
 
     if key == "m": # Follows Mercury
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[0]] = 1
 
     if key == "v": # Follows Venus
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[1]] = 1
 
     if key == "e": # Follows Earth
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[2]] = 1
 
     if key == "r": # Follows Mars
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[3]] = 1
 
     if key == "j": # Follows Jupiter
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[4]] = 1
 
     if key == "s": # Follows Saturn
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[5]] = 1
 
     if key == "u": # Follows Uranus
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[6]] = 1
 
     if key == "n": # Follows Neptune
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
         held_keys[letters[7]] = 1
 
     if key == "p": # Follows Pluto
-        camera.y = 20
+        camera.y = trackingCameraHeight
         camera.rotation_x = 90
         for i in letters:
             held_keys[i] = 0
@@ -277,7 +279,7 @@ with open(r'ursina-project\ursina-project\src\planets.json', "r") as current:
 letters = ["z","x","c","b","l","k","t","y","q"]
 
 def sOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -286,7 +288,7 @@ def sOnClick():
     print("".join([f"\n{key}, {uranusInfo[key]}" for key in uranusInfo.keys()]))
 
 def mOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -296,17 +298,17 @@ def mOnClick():
     print("".join([f"\n{key}, {mercuryInfo[key]}" for key in mercuryInfo.keys()]))
 
 def vOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
         held_keys[i] = 0
 
     held_keys[letters[1]] = 1
-    print("".join([f"\n{key}, {venus[key]}" for key in venusInfo.keys()]))
+    print("".join([f"\n{key}, {venusInfo[key]}" for key in venusInfo.keys()]))
 
 def eOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -316,7 +318,7 @@ def eOnClick():
     print("".join([f"\n{key}, {earthInfo[key]}" for key in earthInfo.keys()]))
 
 def rOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -326,7 +328,7 @@ def rOnClick():
     print("".join([f"\n{key}, {marsInfo[key]}" for key in marsInfo.keys()]))
 
 def jOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -337,7 +339,7 @@ def jOnClick():
 
 
 def stOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -347,7 +349,7 @@ def stOnClick():
     print("".join([f"\n{key}, {saturnInfo[key]}" for key in saturnInfo.keys()]))
 
 def uOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -358,7 +360,7 @@ def uOnClick():
 
 
 def nOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
@@ -368,7 +370,7 @@ def nOnClick():
     print("".join([f"\n{key}, {neptuneInfo[key]}" for key in neptuneInfo.keys()]))
 
 def pOnClick():
-    camera.position = (0, 20, 0)
+    camera.position = (0, trackingCameraHeight, 0)
     camera.rotation_x = 90
 
     for i in letters:
