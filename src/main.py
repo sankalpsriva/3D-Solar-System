@@ -124,6 +124,7 @@ def input(key):
 def update(): 
     # Global variables that are used, cannot be defined here because it would never increase
     global mercuryDeltaT, venusDeltaT, earthDeltaT, marsDeltaT, jupiterDeltaT, saturnDeltaT, uranusDeltaT, neptuneDeltaT, plutoDeltaT, cameraDeltaT
+    global mercuryText, venusText, earthText, marsText, jupiterText, saturnText, uranusText, neptuneText, plutoText, cameraText
     global pause
 
     if not pause:
@@ -144,6 +145,11 @@ def update():
         mercury_radius = 2.3
         mercury.x = math.cos(mercuryDeltaT) * mercury_radius
         mercury.z = math.sin(mercuryDeltaT) * mercury_radius
+
+        # mercuryText.x = math.cos(mercuryDeltaT) * mercury_radius
+        # mercuryText.z = math.sin(mercuryDeltaT) * mercury_radius
+        mercuryText.y = 5
+
         mercury.rotation_y += time.dt * 50
 
         # Venus orbit 
@@ -424,7 +430,7 @@ uRing = Entity(model=load_model('torus.obj'))
 uRing.position = uranus.position
 uRing.scale = uranus.scale - .1
 uRing.scale_y = .3
-uRing.rotation_x = 110
+uRing.rotation_x = 90
 uRing.reparent_to(uranus)
 uRing.color = color.rgb(28, 156, 195)
 
@@ -450,6 +456,9 @@ uranusDeltaT = np.pi
 neptuneDeltaT = np.pi
 plutoDeltaT = np.pi
 cameraDeltaT = np.pi
+
+mercuryText = Text(text = "Mercury", scale = 5)
+
 
 
 app.run()
