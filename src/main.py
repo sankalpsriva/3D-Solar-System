@@ -218,57 +218,48 @@ def sOnClick():
 
 def mOnClick():
     set()
-    
     held_keys[Constants.letters[0]] = 1
     print("".join([f"\n{key}, {Constants.mercuryInfo[key]}" for key in Constants.mercuryInfo.keys()]))
 
 def vOnClick():
     set()
-    
     held_keys[Constants.letters[1]] = 1
     print("".join([f"\n{key}, {Constants.venusInfo[key]}" for key in Constants.venusInfo.keys()]))
 
 def eOnClick():
     set()
-    
     held_keys[Constants.letters[2]] = 1
     print("".join([f"\n{key}, {Constants.earthInfo[key]}" for key in Constants.earthInfo.keys()]))
 
 def rOnClick():
     set()
-    
     held_keys[Constants.letters[3]] = 1
     print("".join([f"\n{key}, {Constants.marsInfo[key]}" for key in Constants.marsInfo.keys()]))
 
 def jOnClick():
     set()
-
     held_keys[Constants.letters[4]] = 1
     print("".join([f"\n{key}, {Constants.jupiterInfo[key]}" for key in Constants.jupiterInfo.keys()]))
 
 
 def stOnClick():
     set()
-    
     held_keys[Constants.letters[5]] = 1
     print("".join([f"\n{key}, {Constants.saturnInfo[key]}" for key in Constants.saturnInfo.keys()]))
 
 def uOnClick():
     set()
-    
     held_keys[Constants.letters[6]] = 1
     print("".join([f"\n{key}, {Constants.uranusInfo[key]}" for key in Constants.uranusInfo.keys()]))
 
 
 def nOnClick():
     set()
-    
     held_keys[Constants.letters[7]] = 1
     print("".join([f"\n{key}, {Constants.neptuneInfo[key]}" for key in Constants.neptuneInfo.keys()]))
 
 def pOnClick():
     set()
-    
     held_keys[Constants.letters[8]] = 1
     print("".join([f"\n{key}, {Constants.plutoInfo[key]}" for key in Constants.plutoInfo.keys()]))
 
@@ -283,7 +274,6 @@ saturn = Entity(model = "sphere", scale = 2.5, texture = "saturn.jpg", collider 
 neptune = Entity(model = "sphere", scale = 1.2, texture = "neptune.jpg", collider = 'box', on_click = nOnClick)
 uranus = Entity(model = "sphere", scale = 1.5, texture = "uranus.jfif", collider = 'box', on_click = uOnClick)
 pluto = Entity(model = "sphere", scale = .5, texture = "pluto.jpg", collider = 'box', on_click = pOnClick)
-
 
 ring = Entity(model=load_model('torus.obj'))
 ring.position = saturn.position
