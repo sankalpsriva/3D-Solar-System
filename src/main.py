@@ -11,7 +11,9 @@ def set():
     for i in Constants.letters:
         held_keys[i] = 0
         
-global root
+def returnText(data):
+    return "".join([f"\n{key}, {data[key]}" for key in data.keys()])
+
 def input(key):
     # Keyboard Presses
     if key == "1": # Camera posistion one, side view of planets
@@ -214,54 +216,54 @@ app = Ursina(position = (0, 0))
 
 def sOnClick():
     set()
-    print("".join([f"\n{key}, {Constants.sunInfo[key]}" for key in Constants.sunInfo.keys()]))
+    print(returnText(Constants.sunInfo))
 
 def mOnClick():
     set()
     held_keys[Constants.letters[0]] = 1
-    print("".join([f"\n{key}, {Constants.mercuryInfo[key]}" for key in Constants.mercuryInfo.keys()]))
+    print(returnText(Constants.mercuryInfo))
 
 def vOnClick():
     set()
     held_keys[Constants.letters[1]] = 1
-    print("".join([f"\n{key}, {Constants.venusInfo[key]}" for key in Constants.venusInfo.keys()]))
+    print(returnText(Constants.venusInfo))
 
 def eOnClick():
     set()
     held_keys[Constants.letters[2]] = 1
-    print("".join([f"\n{key}, {Constants.earthInfo[key]}" for key in Constants.earthInfo.keys()]))
+    print(returnText(Constants.earthInfo))
 
 def rOnClick():
     set()
     held_keys[Constants.letters[3]] = 1
-    print("".join([f"\n{key}, {Constants.marsInfo[key]}" for key in Constants.marsInfo.keys()]))
+    print(returnText(Constants.marsInfo))
 
 def jOnClick():
     set()
     held_keys[Constants.letters[4]] = 1
-    print("".join([f"\n{key}, {Constants.jupiterInfo[key]}" for key in Constants.jupiterInfo.keys()]))
+    print(returnText(Constants.jupiterInfo))
 
 
 def stOnClick():
     set()
     held_keys[Constants.letters[5]] = 1
-    print("".join([f"\n{key}, {Constants.saturnInfo[key]}" for key in Constants.saturnInfo.keys()]))
+    print(returnText(Constants.saturnInfo))
 
 def uOnClick():
     set()
     held_keys[Constants.letters[6]] = 1
-    print("".join([f"\n{key}, {Constants.uranusInfo[key]}" for key in Constants.uranusInfo.keys()]))
+    print(returnText(Constants.uranusInfo))
 
 
 def nOnClick():
     set()
     held_keys[Constants.letters[7]] = 1
-    print("".join([f"\n{key}, {Constants.neptuneInfo[key]}" for key in Constants.neptuneInfo.keys()]))
+    print(returnText(Constants.neptuneInfo))
 
 def pOnClick():
     set()
     held_keys[Constants.letters[8]] = 1
-    print("".join([f"\n{key}, {Constants.plutoInfo[key]}" for key in Constants.plutoInfo.keys()]))
+    print(returnText(Constants.plutoInfo))
 
 sun = Entity(model = "sphere", scale = 2, texture = "sun.png", collider = 'box', on_click = sOnClick)
 mercury = Entity(model = "sphere", scale = .8, texture = "mercury.jpg", collider = 'box', on_click = mOnClick)
