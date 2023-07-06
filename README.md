@@ -9,26 +9,26 @@ The ursina, colorama, and numpy modules must be installed in order for the proje
 in order to install modules open the terminal and type the command pip install "module_name" 
 
 # Controls
-1: 3D side view of Planets
-2: Another 3D side view of Planets
-3: Bird's Eye View of Solar System
-esc: Pauses movement
-m: Follows Mercury
-v: Folows Venus
-e: Follows Venus
-r: Follows Mars
-j: Follows Jupiter
-s: Follows Saturn
-u: Follows Uranus
-n: Follows Neuptune
-p: Follows Pluto
-up arrow: zooms out (up on y-axis)
-down arrow: zooms in (down on y-axis)
-left arrow: moves to the left
-right arrow: moves to the right
-shift + left: moves on the z-axis (on the sun's axis) closer to the sun
-shift + right: moves on the z-axis (on the sun's axis) away from the sun
-click on planets: track planets, and get information on it
+1: 3D side view of Planets<br />
+2: Another 3D side view of Planets<br />
+3: Bird's Eye View of Solar System<br />
+esc: Pauses movement<br />
+m: Follows Mercury<br />
+v: Folows Venus<br />
+e: Follows Earth<br />
+r: Follows Mars<br />
+j: Follows Jupiter<br />
+s: Follows Saturn<br />
+u: Follows Uranus<br />
+n: Follows Neuptune<br />
+p: Follows Pluto<br />
+up arrow: zooms out (up on y-axis)<br />
+down arrow: zooms in (down on y-axis)<br />
+left arrow: moves to the left<br />
+right arrow: moves to the right<br />
+shift + left: moves on the z-axis (on the sun's axis) closer to the sun<br />
+shift + right: moves on the z-axis (on the sun's axis) away from the sun<br />
+click on planets: track planets, and get information on it<br />
 
 # Credits
 *Not all Assets are mine* 
