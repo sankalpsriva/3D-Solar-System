@@ -1,7 +1,6 @@
-from ursina import *
-import json
+from ursina import camera, held_keys, time, Ursina, Entity, load_model, color, Sky, window
+import random, json, math
 import numpy as np
-import math
 from colorama import Fore
 from constants import Constants 
 
