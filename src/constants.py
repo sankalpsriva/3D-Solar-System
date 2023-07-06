@@ -1,11 +1,11 @@
 import json
 import numpy as np
-import ursina
+
 
 class Constants:
     
     # Data
-    with open(r'ursina-project\ursina-project\src\planets.json', "r") as current:
+    with open(r'ursina-project\src\planets.json', "r") as current:
         file = json.load(current)
         sunInfo = file["Sun"][0]
         mercuryInfo = file["Mercury"][0]
@@ -25,6 +25,7 @@ class Constants:
     mercuryDeltaT = np.pi
     venusDeltaT = np.pi
     earthDeltaT = np.pi
+    moonDeltaT = np.pi
     marsDeltaT = np.pi
     jupiterDeltaT = np.pi
     saturnDeltaT = np.pi
@@ -33,6 +34,8 @@ class Constants:
     plutoDeltaT = np.pi
     cameraDeltaT = np.pi
     speedDiv = 8
+    
+    rotationConstant = 50
     
     # Planet Radius and Star Radius
     spacing = 2
@@ -50,10 +53,12 @@ class Constants:
     # Camera Constants
     trackingCameraHeight = 50
     defaultHeight = 300
+    negate = 1
     
     
     # Booleans
     pause = False
+    sideTrack = False
 
     
     

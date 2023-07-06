@@ -5,7 +5,7 @@ import math
 from colorama import Fore
 from constants import Constants 
 
-def set():
+def setTrackingCamera():
     camera.y = Constants.trackingCameraHeight
     camera.rotation_x = 90
     for i in Constants.letters:
@@ -17,21 +17,28 @@ def returnText(data):
 def input(key):
     # Keyboard Presses
     if key == "1": # Camera posistion one, side view of planets
-        set()
+        setTrackingCamera()
+        
+        Constants.negate = 1
         camera.position = (0, 0, -70)
         camera.rotation = (0, 0, 0)
     
     if key == "2": # Camera posistion two, side view of planets
-        set()
+        setTrackingCamera()
+        Constants.negate = -1
         camera.position = (0, 0, 70)
         camera.rotation = (0, -180, 0)
 
     if key == "3": # Camera posistion three, bird's eye view 
-        set()
+        setTrackingCamera()
+        Constants.negate = 1
         camera.position = (0, Constants.defaultHeight, 0)
         camera.rotation_x = 90
         camera.rotation_z = 0
         camera.rotation_y = 0
+    
+    if key == "0":
+        Constants.sideTrack = not Constants.sideTrack
     
     if key == "escape": # Pauses movement
         Constants.pause = not Constants.pause
@@ -42,39 +49,39 @@ def input(key):
             print(f"{Fore.GREEN + key}: {Fore.GREEN + Constants.controls[key]} {Fore.WHITE}")
 
     if key == "m": # Follows Mercury
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[0]] = 1
 
     if key == "v": # Follows Venus
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[1]] = 1
 
     if key == "e": # Follows Earth
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[2]] = 1
 
     if key == "r": # Follows Mars
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[3]] = 1
 
     if key == "j": # Follows Jupiter
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[4]] = 1
 
     if key == "s": # Follows Saturn
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[5]] = 1
 
     if key == "u": # Follows Uranus
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[6]] = 1
 
     if key == "n": # Follows Neptune
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[7]] = 1
 
     if key == "p": # Follows Pluto
-        set()
+        setTrackingCamera()
         held_keys[Constants.letters[8]] = 1
 
 def update(): 
@@ -96,53 +103,53 @@ def update():
         # Mercury orbit 
         mercury.x = math.cos(Constants.mercuryDeltaT) * Constants.mercuryRadius
         mercury.z = math.sin(Constants.mercuryDeltaT) * Constants.mercuryRadius
-        mercury.rotation_y += time.dt * 50
+        mercury.rotation_y += time.dt * Constants.rotationConstant
 
         # Venus orbit 
         venus.x = math.cos(Constants.venusDeltaT) * Constants.venusRadius
         venus.z = math.sin(Constants.venusDeltaT) * Constants.venusRadius
-        venus.rotation_y += time.dt * 50
+        venus.rotation_y += time.dt * Constants.rotationConstant
 
         # Earth orbit    
         earth.x = math.cos(Constants.earthDeltaT) * Constants.earthRadius
         earth.z = math.sin(Constants.earthDeltaT) * Constants.earthRadius
-        earth.rotation_y += time.dt * 50
+        earth.rotation_y += time.dt * Constants.rotationConstant
 
         # Moon orbit, had to use earthDeltaT and added earth.x and earth.z to make it orbit around the earth
         moon.y = .5
         moon.x = math.cos(Constants.earthDeltaT) * (Constants.earthRadius - 4) + earth.x / 2.3
         moon.z = math.sin(Constants.earthDeltaT) * (Constants.earthRadius - 4) + earth.z / 2.3
-        moon.rotation_y += time.dt * 50
+        moon.rotation_y += time.dt * Constants.rotationConstant
 
         # Mars orbit
         mars.x = math.cos(Constants.marsDeltaT) * Constants.marsRadius
         mars.z = math.sin(Constants.marsDeltaT) * Constants.marsRadius
-        mars.rotation_y += time.dt * 50
+        mars.rotation_y += time.dt * Constants.rotationConstant
 
         # Jupiter orbit
         jupiter.x = math.cos(Constants.jupiterDeltaT) * Constants.jupiterRadius
         jupiter.z = math.sin(Constants.jupiterDeltaT) * Constants.jupiterRadius 
-        jupiter.rotation_y += time.dt * 50
+        jupiter.rotation_y += time.dt * Constants.rotationConstant
 
         # Saturn orbit
         saturn.x = math.cos(Constants.saturnDeltaT) * Constants.saturnRadius
         saturn.z = math.sin(Constants.saturnDeltaT) * Constants.saturnRadius
-        saturn.rotation_y += time.dt * 50
+        saturn.rotation_y += time.dt * Constants.rotationConstant
 
         # Uranus orbit
         uranus.x = math.cos(Constants.uranusDeltaT) * Constants.uranusRadius
         uranus.z = math.sin(Constants.uranusDeltaT) * Constants.uranusRadius
-        uranus.rotation_y += time.dt * 50
+        uranus.rotation_y += time.dt * Constants.rotationConstant
 
         # Neptune orbit
         neptune.x = math.cos(Constants.neptuneDeltaT) * Constants.neptuneRadius
         neptune.z = math.sin(Constants.neptuneDeltaT) * Constants.neptuneRadius
-        neptune.rotation_y += time.dt * 50
+        neptune.rotation_y += time.dt * Constants.rotationConstant
         
         # Pluto orbit
         pluto.x = math.cos(Constants.plutoDeltaT) * Constants.plutoRadius
         pluto.z = math.sin(Constants.plutoDeltaT) * Constants.plutoRadius
-        pluto.rotation_y += time.dt * 50
+        pluto.rotation_y += time.dt * Constants.rotationConstant
 
         # Camera tracking based on letter pressed
         if held_keys[Constants.letters[0]]:
@@ -189,10 +196,10 @@ def update():
         camera.y -= .5
     
     if held_keys["left arrow"] and not held_keys["control"]:
-        camera.x -= .5
+        camera.x -= .5 * Constants.negate
 
     if held_keys["right arrow"] and not held_keys["control"]:
-        camera.x += .5
+        camera.x += .5 * Constants.negate
 
     if held_keys["shift"] and held_keys["up arrow"]:
         camera.z += .5
@@ -215,53 +222,53 @@ def update():
 app = Ursina(position = (0, 0))
 
 def sOnClick():
-    set()
+    setTrackingCamera()
     print(returnText(Constants.sunInfo))
 
 def mOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[0]] = 1
     print(returnText(Constants.mercuryInfo))
 
 def vOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[1]] = 1
     print(returnText(Constants.venusInfo))
 
 def eOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[2]] = 1
     print(returnText(Constants.earthInfo))
 
 def rOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[3]] = 1
     print(returnText(Constants.marsInfo))
 
 def jOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[4]] = 1
     print(returnText(Constants.jupiterInfo))
 
 
 def stOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[5]] = 1
     print(returnText(Constants.saturnInfo))
 
 def uOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[6]] = 1
     print(returnText(Constants.uranusInfo))
 
 
 def nOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[7]] = 1
     print(returnText(Constants.neptuneInfo))
 
 def pOnClick():
-    set()
+    setTrackingCamera()
     held_keys[Constants.letters[8]] = 1
     print(returnText(Constants.plutoInfo))
 
@@ -293,15 +300,15 @@ for i in range(1000):
     star.z = math.sin(i) * Constants.starRadius
     star.y = random.randint(-100, 100)
 
-    bStar.x = random.randint(-100, 100)
-    bStar.z = random.randint(-100, 100)
-    bStar.y = -50
+    bStar.x = random.randint(-150, 150)
+    bStar.z = random.randint(-150, 150)
+    bStar.y = -100
 
     bStar.color = color.rgb(random.randint(0,255), random.randint(0,255), random.randint(0,255))
     star.color = color.rgb(random.randint(0,255), random.randint(0,255), random.randint(0,255))
     
 
-uRing = Entity(model=load_model('torus.obj'))
+uRing = Entity(model = load_model('torus.obj'))
 uRing.position = uranus.position
 uRing.scale = uranus.scale - .1
 uRing.scale_y = .3
